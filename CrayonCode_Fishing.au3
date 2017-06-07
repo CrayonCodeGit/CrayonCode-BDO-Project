@@ -243,8 +243,8 @@ Func CreateConfig()
 		IniWriteSection("config/settings.ini", "InventorySettings", $InventorySettings)
 
 		Local $DryingSettings = ""
-		$DryingSettings &= "Enable_Drying=0" & @LF
-		$DryingSettings &= "MaxRarity=3" & @LF
+		$DryingSettings &= "Enable_Drying=1" & @LF
+		$DryingSettings &= "MaxRarity=2" & @LF
 		$DryingSettings &= "DryingInterval=5" & @LF
 		IniWriteSection("config/settings.ini", "DryingSettings", $DryingSettings)
 

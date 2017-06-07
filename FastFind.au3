@@ -84,7 +84,7 @@
 global $FFDefaultSnapShot = 0 	 ; Default SnapShot Nb
 
 
-global $FFDefautDebugMode = 0xE7 ; Si below to the meaning of this value. To remove all debug features (file traces, graphical feedback..., use 0 here)
+global $FFDefautDebugMode = 0 ; Si below to the meaning of this value. To remove all debug features (file traces, graphical feedback..., use 0 here)
 
 
 ; System global variables ** do not change them **
