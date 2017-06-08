@@ -43,6 +43,11 @@ Global $LNG = "en"
 Global $ScreenCapLoot = False
 Global $LogEnable = True
 
+Global $aListView1[10]
+For $i = 1 to 9
+	$aListView1[$i] = GUICtrlCreateListViewItem("", $ListView1)
+Next
+
 HotKeySet("^{F1}", "_terminate")
 
 HotKeySet("{F3}", "PauseToggle")
@@ -53,6 +58,7 @@ HotKeySet("{F5}", "FishingAssist")
 ; # GUI
 Func SetGUIStatus($data)
 	Local Static $LastGUIStatus
+	Local Static $Limits = _GUICtrlEdit_SetLimitText ( $ELog, 300000000 ) ; Increase Text Limit since Log usually stopped around 800 lines
 	If $data <> $LastGUIStatus Then
 		_GUICtrlEdit_AppendText($ELog, @HOUR & ":" & @MIN & "." & @SEC & " " & $data & @CRLF)
 		ConsoleWrite(@CRLF & @HOUR & ":" & @MIN & "." & @SEC & " " & $data)
@@ -150,6 +156,14 @@ Func InitGUI()
 	$LNG = $ClientSettings[2][1]
 	$LogEnable = $ClientSettings[3][1]
 	$ScreenCapLoot = $ClientSettings[4][1]
+
+	Local $TotalStats = IniReadSection("logs/stats.ini", "TotalStats")
+	Local $SessionStats = IniReadSection("logs/stats.ini", "SessionStats")
+
+
+	For $i = 1 To 9
+		GUICtrlSetData($aListView1[$i], $SessionStats[$i][0] & "|" & $SessionStats[$i][1] & "|" & $TotalStats[$i][1], "")
+	Next
 EndFunc
 
 Func StoreGUI()
@@ -788,11 +802,11 @@ Func DetectLoot(ByRef $LWref) ; Identifies Rarity by bordercolor and Empty, Tras
 EndFunc   ;==>DetectLoot
 
 Func ResetSession()
-	Local $SessionStats = IniReadSection("config/stats.ini", "SessionStats")
+	Local $SessionStats = IniReadSection("logs/stats.ini", "SessionStats")
 	For $i = 1 To UBound($SessionStats) - 1 Step 1
 		$SessionStats[$i][1] = 0
 	Next
-	IniWriteSection("config/stats.ini", "SessionStats", $SessionStats)
+	IniWriteSection("logs/stats.ini", "SessionStats", $SessionStats)
 	InitGUI()
 EndFunc   ;==>ResetSession
 
@@ -838,6 +852,11 @@ Func DocLoot(ByRef $Loot)
 		EndIf
 	Next
 
+
+	For $i = 1 To 9
+		GUICtrlSetData($aListView1[$i], $SessionStats[$i][0] & "|" & $SessionStats[$i][1] & "|" & $TotalStats[$i][1], "")
+	Next
+
 	IniWriteSection("logs/stats.ini", "TotalStats", $TotalStats)
 	IniWriteSection("logs/stats.ini", "SessionStats", $SessionStats)
 EndFunc   ;==>DocLoot
@@ -846,7 +865,7 @@ Func DetectEnterQuantity($Left, $Top)
 	Local Const $Quantity = "res/fishing/enteramount.png"
 	Local $x, $y, $IS
 	Sleep(250)
-	$IS = _ImageSearchArea($Quantity, 0, $Left, $Top, $Res[2], $Res[3], $x, $y, 20, "White")
+	$IS = _ImageSearchArea($Quantity, 0, $Left, $Top, $Res[2], $Res[3], $x, $y, 25, "White")
 	If $IS = True Then Return True
 	Return False
 EndFunc   ;==>DetectEnterQuantity
@@ -1039,7 +1058,7 @@ Func CheckInventoryForFishBySlot($MaxRarity = 3)
 				$Right = $InvA[0] + $Slot[0] * $i + $Slot[0]
 				$Bottom = $InvA[1] + $Slot[1] * $j + $Slot[1]
 
-				$IS = _ImageSearchArea($Clock, 1, $Left, $Top, $Right, $Bottom, $C[0], $C[1], 10, "0x00ff00") ; Check for the white clock
+				$IS = _ImageSearchArea($Clock, 1, $Left, $Top, $Right, $Bottom, $C[0], $C[1], 13, "0x00ff00") ; Check for the white clock
 				If $IS = False Then $IS = _ImageSearchArea($ClockRed, 1, $Left, $Top, $Right, $Bottom, $C[0], $C[1], 15, "0x00ff00") ; If no white clock present scan for the red clock
 				If $IS = True Then
 					For $r = 1 To UBound($Rarity) - 1 Step 1
@@ -1253,7 +1272,7 @@ Func LoopSideFunctions()
 	; TODO Load Settings
 	$Fish = True
 	While $Fish
-		Sleep(1000)
+		Sleep(10000)
 		Buff($BuffEnable, $BuffCD, $BuffKeybinds)
 		WorkerFeed($WorkerEnable, $WorkerCD)
 		AntiScreenSaverMouseWiggle()

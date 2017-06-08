@@ -2,11 +2,12 @@
 #include <ComboConstants.au3>
 #include <EditConstants.au3>
 #include <GUIConstantsEx.au3>
+#include <ListViewConstants.au3>
 #include <StaticConstants.au3>
 #include <TabConstants.au3>
 #include <WindowsConstants.au3>
 #Region ### START Koda GUI section ### Form=c:\program files (x86)\autoit3\scite\koda\forms\fish2.kxf
-$Form1_1 = GUICreate("CrayonCode Fishing", 615, 437, 196, 143)
+$Form1_1 = GUICreate("CrayonCode Fishing", 615, 437, 231, 124)
 $Tab1 = GUICtrlCreateTab(0, 0, 614, 400)
 $Tab_StatusLog = GUICtrlCreateTabItem("Status Log")
 $ELog = GUICtrlCreateEdit("", 8, 32, 593, 361, BitOR($GUI_SS_DEFAULT_EDIT,$ES_READONLY))
@@ -80,6 +81,12 @@ GUICtrlSetTip(-1, "Discards disposable fishingrods. (Those that can't be repaire
 $IBufferSize = GUICtrlCreateInput("0", 440, 356, 65, 21, BitOR($GUI_SS_DEFAULT_INPUT,$ES_NUMBER))
 $Label7 = GUICtrlCreateLabel("Buffer Size:", 368, 360, 58, 17)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
+$TabSheet1 = GUICtrlCreateTabItem("Tab_Stats")
+$ListView1 = GUICtrlCreateListView("|Session|Total|", 24, 40, 570, 342)
+GUICtrlSendMsg(-1, $LVM_SETCOLUMNWIDTH, 0, 100)
+GUICtrlSendMsg(-1, $LVM_SETCOLUMNWIDTH, 1, 100)
+GUICtrlSendMsg(-1, $LVM_SETCOLUMNWIDTH, 2, 100)
+GUICtrlSendMsg(-1, $LVM_SETCOLUMNWIDTH, 3, 100)
 GUICtrlCreateTabItem("")
 $BSave = GUICtrlCreateButton("Save Settings", 8, 400, 100, 33)
 $BFish = GUICtrlCreateButton("Start Fishing [F4]", 256, 400, 100, 33)
