@@ -1295,18 +1295,18 @@ Func Main_Fishing()
 	$BufferSize = IniReadKey("BufferSize", $InventorySettings)
 
 	; WorkerSettings
-	Local $WorkerEnable = IniReadKey("Enable_FeedWorker", $WorkerSettings)
-	Local $WorkerCD = IniReadKey("FeedWorkerInterval", $WorkerSettings)
+	Dim $WorkerEnable = Int(IniReadKey("Enable_FeedWorker", $WorkerSettings))
+	Dim $WorkerCD = IniReadKey("FeedWorkerInterval", $WorkerSettings)
 
 	; BuffSettings
-	Local $BuffEnable = IniReadKey("Enable_Buff", $BuffSettings)
-	Local $BuffCD = IniReadKey("BuffInterval", $BuffSettings)
-	Local $BuffKeybinds = StringSplit(StringStripWS(IniReadKey("BuffKeys", $BuffSettings),8), ",", 2)
+	Dim $BuffEnable = Int(IniReadKey("Enable_Buff", $BuffSettings))
+	Dim $BuffCD = IniReadKey("BuffInterval", $BuffSettings)
+	Dim $BuffKeybinds = StringSplit(StringStripWS(IniReadKey("BuffKeys", $BuffSettings),8), ",", 2)
 
 	; DryingSettings
-	Local $DryFishEnable = IniReadKey("Enable_Drying", $DryingSettings)
-	Local $DryFishMaxRarity = IniReadKey("MaxRarity", $DryingSettings)
-	Local $DryFishCD = IniReadKey("DryingInterval", $DryingSettings)
+	Dim $DryFishEnable = Int(IniReadKey("Enable_Drying", $DryingSettings))
+	Dim $DryFishMaxRarity = IniReadKey("MaxRarity", $DryingSettings)
+	Dim $DryFishCD = IniReadKey("DryingInterval", $DryingSettings)
 
 	$Res = DetectFullscreenToWindowedOffset($hTitle)
 
