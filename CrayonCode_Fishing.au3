@@ -908,7 +908,7 @@ Func HandleLoot(ByRef $LS, $Reserve = 0)
 		If $Loot[$j][2] < 0 Then $Pick[$j] = 0 ; ignore items
 	Next
 
-	Sleep(1000)
+	Sleep(1250)
 	SetGUIStatus(StringFormat("Filter: R%s S%s A%s C%s E%s T%s", $LS_Rarity, $LS_Silverkey, $LS_AncientRelic, $LS_Coelacanth, $LS_EventItems, $LS_TrashItems))
 	SetGUIStatus("Pick:[" & $Pick[0] & "][" & $Pick[1] & "][" & $Pick[2] & "][" & $Pick[3] & "]")
 	If $Reserve = 1 Then SetGUIStatus("Relic Reserve reached. Unstackable Picks below " & $Threshold & " will be ignored.")
@@ -920,9 +920,10 @@ Func HandleLoot(ByRef $LS, $Reserve = 0)
 
 			If Not VisibleCursor() Then CoSe("{LCTRL}")
 			Sleep(250)
-
-			VMouse($LW[0] + 20 + $LW[4] * $j, $LW[1] + 20, 1, "Right")
+			VMouse($LW[0] + 20 + $LW[4] * $j, $LW[1] + 20)
 			Sleep(50)
+			VMouse($LW[0] + 20 + $LW[4] * $j, $LW[1] + 20, 1, "Right")
+			Sleep(100)
 			If $Pick[$j] = 21 Or $Pick[$j] = 31 Then ; If it's an event item check for quantity.
 				SetGUIStatus("Trying to pick Event Item. Checking Quantity.")
 				If DetectEnterQuantity($LW[0], $LW[1]) = True Then
