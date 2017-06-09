@@ -920,7 +920,7 @@ Func HandleLoot(ByRef $LS, $Reserve = 0)
 
 			If Not VisibleCursor() Then CoSe("{LCTRL}")
 			Sleep(250)
-			VMouse($LW[0] + 20 + $LW[4] * $j, $LW[1] + 20)
+			VMouse($LW[0] + 20 + $LW[4] * $j +1, $LW[1] + 20)
 			Sleep(50)
 			VMouse($LW[0] + 20 + $LW[4] * $j, $LW[1] + 20, 1, "Right")
 			Sleep(100)
